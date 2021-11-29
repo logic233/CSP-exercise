@@ -175,7 +175,7 @@ $Chaos_A$：进程总是能选择通信或者拒绝
 
 traces是一种我们用来构建CSP进程模型的典型行为。通过与环境之间的交互，它们是可以被清晰观测的，并且它们中的每一个都是一次独立交互的记录。这里介绍一种基础的方法，用来说明CSP进程的正确性。
 
-![uTools_1637913669441](\Understanding Concurrent Systems.assets\uTools_1637913669441.png)
+![uTools_1637913669441](E:\我的坚果云\md\execrise\CSP\Understanding Concurrent Systems.assets\uTools_1637913669441.png)
 
 Q trace-refines P（Q在迹上提炼了P）或者说，每个Q的迹都是P的迹。
 
@@ -189,7 +189,57 @@ CSP不仅是一种用来记录计划实施的语言，而且可以用来记录�
 
 CSP 是研究特定进程的演算，这些进程通过通信的方式同彼此或是环境进行交互。CSP中最基本的对象是通信事件。$\Sigma$通常被用来表示所有体系中所有可能发生的进程通信的集合。可以把通信同多个进程之间的转变、同步相类比，而不是被视为单向的数据传输。
 
-CSP中的事件具备条件性和瞬时性。
+CSP中的事件具备条件性（需要双边同意）和瞬时性。
 
+只有当进程同环境发生通信时，环境才能观测它。
 
+CSP会包含一些在“坏行为”（例如死锁、不确定性）的定义，是为了证明这些行为在实际程序中不存在。
 
+### 1.6 Tools
+
+帮助我们理解CSP进程的自动化工具主要有两大类：一是让我们直观地观察进程是如何表现的，二是尝试去证明一些属性，例如迹的提炼。
+
+前者的例子就是PRoBE。通过该工具，你可以写下一个任意的进程描述以及它的交互。换而言之，你可以扮演环境。事实上，动画器提供了有关进程控制的各种程度选项（例如，进程有多少行为是自动的），通常它也会提供更加精确的控制方式。例如，你可以控制进程的内部选择。
+
+在第8章中，会为FDR小白讲解FDR是什么以及使用方法。尤其是，会介绍CSP的ASCII版本，即$CSP_M$，可作为各类CSP工具的输入格式。以及对于FDR工具来说相当重要的，有限状态和无限状态的区别。
+
+在$CSP_M$中明确使用的事件用下列方法进行明确定义：
+
+```go
+channel sleep,getup,gotobed
+channel eat:Meals
+channel tv:Channels
+channel walk:Place.Place
+```
+
+第一行定义了无数据通道，命名为**独立事件**。剩下的皆定义了至少拥有一个数据组件的通道。所有$CSP_M$中的事件都由一个通道名以及0或多个数据组件组成。'channel'定义创造了一个在脚本可以使用的名字。
+
+#### 1.6.1 Finite-State Machines
+
+由于FDR是靠展开进程的状态空间来工作的，所以倘若进程是无限的，FDR将不会停下来！
+
+一种解决这个问题的方法是限制参数数量。
+
+## Chapter 2 Understanding CSP
+
+该章将描述一些可以证明进程等价的方法以及理解进程是如何表现的。
+
+关于CSP程序，有3种方法去理解它们。第一是algebra，我们设置规则确保记号满足它们；第二是behavioural models 例如迹，构成了提炼关系和其他东西的基础；第三是operational models，尝试去理解进程执行在运行过程中的所有行动和决定。
+
+### 2.1 Algebra
+
+代数法则就是两个表达式（包含操作符和标识符）等价。所谓等价，我们可以理解为两边是本质上相同的，对CSP来说就是他们的通信行为不能够被环境所区分。
+
+CSP中我们讨论以下操作符：prefixing,external choice,nondeterministic choice,conditionals.
+
+外部和内部选择均有幂等性、对称性、结合性。
+
+![uTools_1638168514741](E:\我的坚果云\md\execrise\CSP\Understanding Concurrent Systems.assets\uTools_1638168514741.png)
+
+这三种规则是我们确保集合非确定性选择符($\sqcap S$)成立的必须条件。
+
+分配性
+
+![uTools_1638169979003](E:\我的坚果云\md\execrise\CSP\Understanding Concurrent Systems.assets\uTools_1638169979003.png)
+
+由于CSP是线性时间观察（无法冻结和回退），绝大多操作符对不确定事件的分配率都是正确的。但在其他进程代数中是不正确的。
