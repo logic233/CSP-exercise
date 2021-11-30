@@ -243,3 +243,36 @@ CSP中我们讨论以下操作符：prefixing,external choice,nondeterministic c
 ![uTools_1638169979003](E:\我的坚果云\md\execrise\CSP\Understanding Concurrent Systems.assets\uTools_1638169979003.png)
 
 由于CSP是线性时间观察（无法冻结和回退），绝大多操作符对不确定事件的分配率都是正确的。但在其他进程代数中是不正确的。
+
+分配律对于循环来说是不使用的。
+
+在CSP中最常用的定律。
+
+![uTools_1638237229696](E:\我的坚果云\md\execrise\CSP\Understanding Concurrent Systems.assets\uTools_1638237229696.png)
+
+如果一个进程同时提供A和B，那么当A和B同时提供的时候，进程将进行内部选择。![uTools_1638237496191](E:\我的坚果云\md\execrise\CSP\Understanding Concurrent Systems.assets\uTools_1638237496191.png)
+
+这被称为步进法则，因为它允许我们计算混合行为的第一个阶段。![uTools_1638237849465](Understanding Concurrent Systems.assets/uTools_1638237849465.png)
+
+![uTools_1638237924141](Understanding Concurrent Systems.assets/uTools_1638237924141.png)
+
+条件选择也是幂等和可分配的。![uTools_1638237995871](Understanding Concurrent Systems.assets/uTools_1638237995871.png)
+
+![uTools_1638238065899](Understanding Concurrent Systems.assets/uTools_1638238065899.png)
+
+![uTools_1638238080694](Understanding Concurrent Systems.assets/uTools_1638238080694.png)
+
+![uTools_1638238094170](Understanding Concurrent Systems.assets/uTools_1638238094170-16382381122861.png)
+
+### 2.2 The Traces Model and Traces Refinement
+
+trace是我们能够观察到的动作序列，但是真正的发生时间是不会被记录的。事实证明，根据一个非时间CSP进程所有能表示trace的集合来建模是非常自然的。
+
+#### 2.2.1 Working out teaces(P)
+
+对于任何进程P来说，traces(P)是它所有有限迹的集合，是有限时间序列集合的成员。例如$traces$
+
+traces(P)一直都有的属性
+
+- 
+
