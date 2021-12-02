@@ -48,19 +48,72 @@ $$
 A change-giving machine takes in £1 coins and gives change in 5, 10 and 20 pence coins. It should have the following events: in£1, out5p, out10p, out20p. Define versions with the following behaviours:
 (a) CMA gives the environment the choice of how it wants the change, and if an extra £1 is inserted while it still has a non-zero balance it increases the amount of change available accordingly.
 $$
-CMA_n=in100\to CMC_{n+100}\vartriangleleft n<5\vartriangleright (out5\to CMC_{n-5}\\
-\sqcap(n \geqslant 10\& out10\to CMC_{n-10})\\
-\sqcap(n \geqslant 20\& out20\to CMC_{n-20})\\
+CMA_n=in100\to CMC_{n+100}\\
+\square n\geqslant 5\&out5\to CMC_{n-5}\\
+\square n \geqslant 10\& out10\to CMC_{n-10}\\
+\square n \geqslant 20\& out20\to CMC_{n-20}\\
 $$
 (b) CMB behaves like CMA except that it will only accept a further £1 if its balance is less than 20p.
-
+$$
+CMA_n=n<20\&in100\to CMC_{n+100}\\
+\square n\geqslant 5\&out5\to CMC_{n-5}\\
+\square n \geqslant 10\& out10\to CMC_{n-10}\\
+\square n \geqslant 20\& out20\to CMC_{n-20}\\
+$$
 (c) CMC is allowed to choose any correct combination of change nondeterministically, only allowing the insertion of £1 when it has zero balance.
 
 $$
-CMC_n=in100\to CMC_{n+100}\vartriangleleft n<5\vartriangleright (out5\to CMC_{n-5}\\
-\sqcap(n \geqslant 10\& out10\to CMC_{n-10})\\
-\sqcap(n \geqslant 20\& out20\to CMC_{n-20})\\
+CMC_n=in100\to CMC_{n+100}\vartriangleleft n<5\vartriangleright (\\out5\to CMC_{n-5}\\
+\sqcap n \geqslant 10\& out10\to CMC_{n-10}\\
+\sqcap n \geqslant 20\& out20\to CMC_{n-20}\\)\\
+$$
+
+##### Exercise 1.7
+
+**COPY** represents a one-place buffer and $B_{<>}^{\infty}$ represents an unbounded one. These are just two examples of processes representing communication media for transmitting information from channel left to channel right. Describe ones with the following behaviours (except for the last one, their output streams must always copy the input ones without loss, preserving order):
+
+(a) FCOPY behaves like COPY except that it is allowed to input a second item when it already contains one, but if it does it breaks (STOP).
+$$
+B_{<>}^{\infty}=left?x\to B_{<x>}^{\infty}\\
+B_{<x>}^{\infty}=right!x\to B_{<>}^{\infty} \square left?y \to STOP
+$$
+(b) DELAY can hold up to two items, but cannot output the first one unless it is full. Thus its outputs are (after the initial input) always one or two behind its inputs, unlike the case with COPY where they are always zero or one behind. 
+$$
+B_{<>}^{\infty}=left?x\to B_{<x>}^{\infty}\to left?y\to B_{<x><y>}^{\infty}\\
+B_{<x><y>}^{\infty}=right!x\to B_{<y>}^{\infty} \square right!y\to B_{<x>}^{\infty}
+$$
+(c) LEAKY behaves like COPY except that it loses every third item.
+$$
+B_{<>}^{\infty}=left?x\to right!x\to left?x\to right!x\to left?x\to B_{<>}^{\infty}
+$$
+
+##### Exercise 1.8
+
+Create a model of Duncan, who has three states modelled on Asleep, InBed and Up. He chooses nondeterministically between read and sleep when InBed, always offers to eat and play when Up, but may or may not offer to work.
+$$
+Duncan = Asleep\square InBed\square Up\\
+Inbed=read \sqcap sleep\\
+Up = (eat\square play)\sqcap work
+$$
+
+##### Exercise 2.1 
+
+Using the laws quoted in the text for $\sqcap$, prove that it distributes over itself (i.e., that $P \sqcap(Q\sqcap R) = (P\sqcap Q) \sqcap (P\sqcap R)$).
+$$
+P \sqcap(Q\sqcap R)=(P\sqcap P) \sqcap(Q\sqcap R)\\
+=(P\sqcap P \sqcap Q)\sqcap R\\
+=((P\sqcap Q) \sqcap P)\sqcap R\\
+=(P\sqcap Q) \sqcap (P\sqcap R)
+$$
+
+##### Exercise 2.2
+
+Suggest some laws for $\sqcap S$ and how it relates to $\sqcap$.
+$$
+
 $$
 
 
+##### Exercise 2.3 
 
+![uTools_1638412684521](exercise.assets/uTools_1638412684521.png)
